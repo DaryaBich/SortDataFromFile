@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class DataReader {
     public static long readAndSortData(long numberOfStrings, String tmpDirName, String fileName) {

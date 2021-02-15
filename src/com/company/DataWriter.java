@@ -1,20 +1,17 @@
 package com.company;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class DataWriter {
+    private static long genLineCount = 4_500_000;
     public static void writeRandomData(String fileName) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             Random randomizer = new Random();
-            for (int i = 0; i < 4_500_000; i++) {
+            for (int i = 0; i < genLineCount; i++) {
                 writer.write(Base64
                         .getEncoder()
                         .encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8)));
@@ -58,10 +55,7 @@ public class DataWriter {
                 writer.write(nextWrite);
                 writer.newLine();
             }
-            Files.walk(Paths.get(DataSorter.tmpDirectory))
-                    .sorted(Comparator.naturalOrder())
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+           FileWorker.deleteDirectories();
             return true;
         } catch (IOException e) {
             System.out.println("Не удается записать данные в конечный файл");
